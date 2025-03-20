@@ -2,8 +2,10 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Instagram, Linkedin, ExternalLink } from 'lucide-react';
-import profileImage from '/lovable-uploads/6cf3714a-7035-41ef-81bb-76cebac91975.png';
 import CustomButton from '../ui/CustomButton';
+
+// Using a placeholder image instead of the missing one
+const placeholderImage = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&h=800";
 
 const Hero = () => {
   useEffect(() => {
@@ -96,7 +98,7 @@ const Hero = () => {
               <div className="absolute inset-0 rounded-full bg-gradient-purple-blue opacity-20 blur-3xl animate-pulse-slow"></div>
               <div className="relative z-10 w-full h-full rounded-full overflow-hidden border-2 border-white/10 p-2 bg-dark-400/50 backdrop-blur-sm">
                 <img 
-                  src={profileImage} 
+                  src={placeholderImage} 
                   alt="Avishkar Jadhav" 
                   className="w-full h-full object-cover rounded-full"
                 />
