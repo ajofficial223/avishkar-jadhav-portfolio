@@ -1,12 +1,73 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import React, { useEffect } from 'react';
+import Navbar from '@/components/layout/Navbar';
+import Footer from '@/components/layout/Footer';
+import Hero from '@/components/sections/Hero';
+import Stats from '@/components/sections/Stats';
+import Skills from '@/components/sections/Skills';
+import Services from '@/components/sections/Services';
+import Portfolio from '@/components/sections/Portfolio';
+import Experience from '@/components/sections/Experience';
+import Contact from '@/components/sections/Contact';
 
 const Index = () => {
+  useEffect(() => {
+    // Initialize intersection observer for reveal animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+      observer.observe(el);
+    });
+
+    // Smooth scroll to section when navigating via hash links
+    const handleHashLinkClick = () => {
+      const { hash } = window.location;
+      if (hash) {
+        const section = document.querySelector(hash);
+        if (section) {
+          setTimeout(() => {
+            section.scrollIntoView({ behavior: 'smooth' });
+          }, 100);
+        }
+      }
+    };
+
+    // Check for hash on initial load
+    handleHashLinkClick();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashLinkClick);
+
+    return () => {
+      // Cleanup
+      document.querySelectorAll('.reveal').forEach(el => {
+        observer.unobserve(el);
+      });
+      window.removeEventListener('hashchange', handleHashLinkClick);
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-dark-500 text-white overflow-x-hidden">
+      <Navbar />
+      
+      <main>
+        <Hero />
+        <Stats />
+        <Skills />
+        <Services />
+        <Portfolio />
+        <Experience />
+        <Contact />
+      </main>
+      
+      <Footer />
     </div>
   );
 };
