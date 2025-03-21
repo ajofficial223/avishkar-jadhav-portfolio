@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect } from 'react';
 
 function SplashCursor({
@@ -122,7 +123,7 @@ function SplashCursor({
           halfFloatTexType
         );
         formatRG = getSupportedFormat(gl, (gl as any).RG16F, (gl as any).RG, halfFloatTexType);
-        formatR = getSupportedFormat(gl, (gl as any).R16F, gl.RED, halfFloatTexType);
+        formatR = getSupportedFormat(gl, (gl as any).R16F, (gl as any).RED, halfFloatTexType);
       } else {
         formatRGBA = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
         formatRG = getSupportedFormat(gl, gl.RGBA, gl.RGBA, halfFloatTexType);
