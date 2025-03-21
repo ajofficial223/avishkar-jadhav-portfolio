@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 
 function SplashCursor({
@@ -63,7 +62,16 @@ function SplashCursor({
       config.SHADING = false;
     }
 
-    function getWebGLContext(canvas: HTMLCanvasElement) {
+    function getWebGLContext(canvas: HTMLCanvasElement): {
+      gl: WebGLRenderingContext;
+      ext: {
+        formatRGBA: any;
+        formatRG: any;
+        formatR: any;
+        halfFloatTexType: number;
+        supportLinearFiltering: any;
+      };
+    } {
       const params = {
         alpha: true,
         depth: false,
@@ -71,18 +79,27 @@ function SplashCursor({
         antialias: false,
         preserveDrawingBuffer: false,
       };
-      let gl = canvas.getContext("webgl2", params) as WebGL2RenderingContext;
-      const isWebGL2 = !!gl;
-      if (!isWebGL2)
-        gl =
-          (canvas.getContext("webgl", params) ||
-          canvas.getContext("experimental-webgl", params)) as WebGLRenderingContext;
+      
+      let gl: WebGLRenderingContext | null = null;
+      let webgl2Context = canvas.getContext("webgl2", params) as WebGL2RenderingContext | null;
+      const isWebGL2 = !!webgl2Context;
+      
+      if (isWebGL2) {
+        gl = webgl2Context as unknown as WebGLRenderingContext;
+      } else {
+        gl = (canvas.getContext("webgl", params) ||
+          canvas.getContext("experimental-webgl", params)) as WebGLRenderingContext | null;
+      }
+      
+      if (!gl) {
+        throw new Error("WebGL not supported");
+      }
       
       let halfFloat;
       let supportLinearFiltering;
       if (isWebGL2) {
-        gl.getExtension("EXT_color_buffer_float");
-        supportLinearFiltering = gl.getExtension("OES_texture_float_linear");
+        (gl as any).getExtension("EXT_color_buffer_float");
+        supportLinearFiltering = (gl as any).getExtension("OES_texture_float_linear");
       } else {
         halfFloat = gl.getExtension("OES_texture_half_float");
         supportLinearFiltering = gl.getExtension(
@@ -91,7 +108,7 @@ function SplashCursor({
       }
       gl.clearColor(0.0, 0.0, 0.0, 1.0);
       const halfFloatTexType = isWebGL2
-        ? gl.HALF_FLOAT
+        ? (gl as any).HALF_FLOAT
         : halfFloat && (halfFloat as any).HALF_FLOAT_OES;
       let formatRGBA;
       let formatRG;
@@ -177,14 +194,14 @@ function SplashCursor({
       fragmentShaderSource: string;
       programs: any[];
       activeProgram: WebGLProgram | null;
-      uniforms: any[];
+      uniforms: Record<string, WebGLUniformLocation>;
 
       constructor(vertexShader: WebGLShader, fragmentShaderSource: string) {
         this.vertexShader = vertexShader;
         this.fragmentShaderSource = fragmentShaderSource;
         this.programs = [];
         this.activeProgram = null;
-        this.uniforms = [];
+        this.uniforms = {};
       }
       setKeywords(keywords: string[]) {
         let hash = 0;
@@ -209,7 +226,7 @@ function SplashCursor({
     }
 
     class Program {
-      uniforms: any;
+      uniforms: Record<string, WebGLUniformLocation>;
       program: WebGLProgram;
 
       constructor(vertexShader: WebGLShader, fragmentShader: WebGLShader) {
@@ -232,12 +249,12 @@ function SplashCursor({
       return program;
     }
 
-    function getUniforms(program: WebGLProgram) {
-      let uniforms: any[] = [];
+    function getUniforms(program: WebGLProgram): Record<string, WebGLUniformLocation> {
+      let uniforms: Record<string, WebGLUniformLocation> = {};
       let uniformCount = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
       for (let i = 0; i < uniformCount; i++) {
         let uniformName = gl.getActiveUniform(program, i)!.name;
-        uniforms[uniformName] = gl.getUniformLocation(program, uniformName);
+        uniforms[uniformName] = gl.getUniformLocation(program, uniformName)!;
       }
       return uniforms;
     }
