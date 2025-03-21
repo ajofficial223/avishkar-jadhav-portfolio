@@ -21,13 +21,25 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
+  const handleSmoothScroll = (e, targetId) => {
+    // Only handle smooth scroll if we're on the homepage
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      setIsMobileMenuOpen(false);
+    }
+  };
+
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Skills', path: '/#skills' },
-    { name: 'Services', path: '/#services' },
-    { name: 'Portfolio', path: '/#portfolio' },
-    { name: 'Experience', path: '/#experience' },
-    { name: 'Contact', path: '/#contact' }
+    { name: 'Home', path: '/', targetId: 'hero' },
+    { name: 'Skills', path: '/#skills', targetId: 'skills' },
+    { name: 'Services', path: '/#services', targetId: 'services' },
+    { name: 'Portfolio', path: '/#portfolio', targetId: 'portfolio' },
+    { name: 'Experience', path: '/#experience', targetId: 'experience' },
+    { name: 'Contact', path: '/#contact', targetId: 'contact' }
   ];
 
   return (
@@ -44,13 +56,14 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.name}
-              to={link.path}
+              href={link.path}
+              onClick={(e) => handleSmoothScroll(e, link.targetId)}
               className="text-white/70 hover:text-white transition-colors relative after:absolute after:bottom-0 after:left-0 after:w-0 hover:after:w-full after:h-0.5 after:bg-gradient-purple-blue after:transition-all after:duration-300"
             >
               {link.name}
-            </Link>
+            </a>
           ))}
           <Link
             to="/hire-me"
@@ -74,14 +87,14 @@ const Navbar = () => {
         <div className="md:hidden absolute top-full left-0 w-full bg-dark-400/95 backdrop-blur-md shadow-lg animate-fade-in">
           <div className="flex flex-col py-4 px-6 space-y-4">
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
-                to={link.path}
+                href={link.path}
+                onClick={(e) => handleSmoothScroll(e, link.targetId)}
                 className="text-white/80 hover:text-white py-2 transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
             <Link
               to="/hire-me"

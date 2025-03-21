@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import CustomButton from '../ui/CustomButton';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
-// Placeholder projects for now
 const projects = [
   {
     title: "Brand Identity Design",
@@ -63,7 +61,7 @@ const Portfolio = () => {
   }, []);
 
   return (
-    <section id="portfolio" className="section-container">
+    <section id="portfolio" className="py-20 bg-dark-400">
       <div className="text-center mb-16 reveal">
         <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
           My Work

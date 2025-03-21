@@ -1,11 +1,10 @@
-
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Instagram, Linkedin, ExternalLink } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 
-// Use the uploaded profile image
-const profileImage = "/public/lovable-uploads/020c5ea4-1c26-4425-b8c3-1ba28ac2d4c8.png";
+// Use the correct path to the uploaded profile image
+const profileImage = "/lovable-uploads/020c5ea4-1c26-4425-b8c3-1ba28ac2d4c8.png";
 
 const Hero = () => {
   useEffect(() => {
@@ -29,7 +28,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center pt-24 pb-16 overflow-hidden relative">
+    <section id="hero" className="min-h-screen flex items-center pt-24 pb-16 overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-neon-purple/5 via-transparent to-transparent opacity-70"></div>
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-neon-blue/5 via-transparent to-transparent opacity-70"></div>
       

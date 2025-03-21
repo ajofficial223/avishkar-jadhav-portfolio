@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 
 const experiences = [
@@ -53,7 +52,7 @@ const Experience = () => {
   }, []);
 
   return (
-    <section id="experience" className="section-container">
+    <section id="experience" className="py-20 bg-dark-500">
       <div className="text-center mb-16 reveal">
         <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
           My Journey
