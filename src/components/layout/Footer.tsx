@@ -77,7 +77,7 @@ const Footer = () => {
                   <ExternalLink size={18} />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/Avishkar Jadhav" 
+                  href="https://in.linkedin.com/in/avishkar-jadhav-" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="social-icon"

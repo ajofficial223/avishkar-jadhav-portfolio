@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Instagram, Linkedin, ExternalLink } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 
-// Using a placeholder image instead of the missing one
-const placeholderImage = "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=800&h=800";
+// Use the uploaded profile image
+const profileImage = "/public/lovable-uploads/020c5ea4-1c26-4425-b8c3-1ba28ac2d4c8.png";
 
 const Hero = () => {
   useEffect(() => {
@@ -80,7 +80,7 @@ const Hero = () => {
                     <ExternalLink size={18} />
                   </a>
                   <a 
-                    href="https://linkedin.com/in/Avishkar Jadhav" 
+                    href="https://in.linkedin.com/in/avishkar-jadhav-" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="social-icon"
@@ -98,7 +98,7 @@ const Hero = () => {
               <div className="absolute inset-0 rounded-full bg-gradient-purple-blue opacity-20 blur-3xl animate-pulse-slow"></div>
               <div className="relative z-10 w-full h-full rounded-full overflow-hidden border-2 border-white/10 p-2 bg-dark-400/50 backdrop-blur-sm">
                 <img 
-                  src={placeholderImage} 
+                  src={profileImage} 
                   alt="Avishkar Jadhav" 
                   className="w-full h-full object-cover rounded-full"
                 />

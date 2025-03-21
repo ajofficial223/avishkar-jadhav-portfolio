@@ -1,6 +1,8 @@
 
 import React, { useEffect, useState } from 'react';
 import CustomButton from '../ui/CustomButton';
+import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 // Placeholder projects for now
 const projects = [
@@ -111,6 +113,16 @@ const Portfolio = () => {
             </div>
           </div>
         ))}
+      </div>
+      
+      <div className="mt-16 text-center reveal">
+        <Link to="/services" className="inline-flex items-center">
+          <CustomButton size="lg" className="group">
+            Explore Services
+            <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+          </CustomButton>
+        </Link>
+        <p className="text-white/50 mt-4 text-sm">Discover all the design services I offer</p>
       </div>
     </section>
   );
