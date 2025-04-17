@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import PageHeader from '@/components/hire-me/PageHeader';
 import HireMeForm from '@/components/hire-me/HireMeForm';
 import ConnectOptions from '@/components/hire-me/ConnectOptions';
+import { Toaster } from '@/components/ui/toaster';
 
 const HireMe = () => {
   useEffect(() => {
@@ -44,6 +45,7 @@ const HireMe = () => {
       </main>
       
       <Footer />
+      <Toaster />
     </div>
   );
 };
