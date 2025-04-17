@@ -26,27 +26,45 @@ const ContactForm = () => {
       // Get the Supabase client
       const supabase = getSupabase();
       
-      // Insert the contact form data into Supabase
-      const { data, error } = await supabase
-        .from('contact_messages')
-        .insert([
-          { 
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-            created_at: new Date().toISOString()
-          }
-        ]);
-      
-      if (error) {
-        console.error('Error submitting contact form:', error);
-        throw error;
+      if (!supabase) {
+        // If Supabase is not initialized, save to localStorage
+        const contactMessage = { 
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          created_at: new Date().toISOString()
+        };
+        
+        const existingMessages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
+        localStorage.setItem('contact_messages', JSON.stringify([...existingMessages, contactMessage]));
+        
+        toast({
+          title: "Message saved locally",
+          description: "Your message has been saved locally. Connect to Supabase to enable online submissions.",
+        });
+      } else {
+        // Insert the contact form data into Supabase
+        const { data, error } = await supabase
+          .from('contact_messages')
+          .insert([
+            { 
+              name: formData.name,
+              email: formData.email,
+              message: formData.message,
+              created_at: new Date().toISOString()
+            }
+          ]);
+        
+        if (error) {
+          console.error('Error submitting contact form:', error);
+          throw error;
+        }
+        
+        toast({
+          title: "Message sent!",
+          description: "Thank you for reaching out. I'll get back to you soon.",
+        });
       }
-      
-      toast({
-        title: "Message sent!",
-        description: "Thank you for reaching out. I'll get back to you soon.",
-      });
       
       // Reset form after successful submission
       setFormData({

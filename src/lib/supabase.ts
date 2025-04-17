@@ -10,4 +10,13 @@ export const supabase = supabaseUrl && supabaseAnonKey
   ? createClient(supabaseUrl, supabaseAnonKey)
   : null;
 
+// Function to safely get the Supabase client
+export const getSupabase = () => {
+  if (!supabase) {
+    console.warn('Supabase client is not initialized. Check your environment variables.');
+    return null;
+  }
+  return supabase;
+};
+
 console.log('Supabase client initialized:', supabase ? 'Yes' : 'No');
