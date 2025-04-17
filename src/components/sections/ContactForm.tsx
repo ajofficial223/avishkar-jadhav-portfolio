@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 import { toast } from '@/components/ui/use-toast';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -23,6 +23,9 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
+      // Get the Supabase client
+      const supabase = getSupabase();
+      
       // Insert the contact form data into Supabase
       const { data, error } = await supabase
         .from('contact_messages')

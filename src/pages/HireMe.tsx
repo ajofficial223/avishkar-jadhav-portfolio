@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Mail, Phone, Send } from 'lucide-react';
@@ -5,7 +6,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CustomButton from '@/components/ui/CustomButton';
 import { toast } from '@/components/ui/use-toast';
-import { supabase } from '@/lib/supabase';
+import { getSupabase } from '@/lib/supabase';
 
 const HireMe = () => {
   const [formData, setFormData] = useState({
@@ -29,6 +30,9 @@ const HireMe = () => {
     setIsSubmitting(true);
     
     try {
+      // Get the Supabase client
+      const supabase = getSupabase();
+      
       // Insert the form data into Supabase
       const { data, error } = await supabase
         .from('project_requests')
