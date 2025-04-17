@@ -1,9 +1,22 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Instagram, Linkedin, ExternalLink } from 'lucide-react';
 
 const Footer = () => {
+  const location = useLocation();
+
+  const handleSmoothScroll = (e, targetId) => {
+    // Only handle smooth scroll if we're on the homepage
+    if (location.pathname === '/') {
+      e.preventDefault();
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   return (
     <footer className="bg-dark-400 border-t border-white/5 py-12">
       <div className="container mx-auto px-6">
@@ -21,29 +34,48 @@ const Footer = () => {
             <h4 className="text-xl font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-white/60 hover:text-white transition-colors">
+                <Link 
+                  to="/" 
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/#skills" className="text-white/60 hover:text-white transition-colors">
+                <a 
+                  href="/#skills" 
+                  onClick={(e) => handleSmoothScroll(e, 'skills')}
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   Skills
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#services" className="text-white/60 hover:text-white transition-colors">
+                <a 
+                  href="/#services" 
+                  onClick={(e) => handleSmoothScroll(e, 'services')}
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   Services
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#portfolio" className="text-white/60 hover:text-white transition-colors">
+                <a 
+                  href="/#portfolio" 
+                  onClick={(e) => handleSmoothScroll(e, 'portfolio')}
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   Portfolio
-                </Link>
+                </a>
               </li>
               <li>
-                <Link to="/#contact" className="text-white/60 hover:text-white transition-colors">
+                <a 
+                  href="/#contact" 
+                  onClick={(e) => handleSmoothScroll(e, 'contact')}
+                  className="text-white/60 hover:text-white transition-colors"
+                >
                   Contact
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
