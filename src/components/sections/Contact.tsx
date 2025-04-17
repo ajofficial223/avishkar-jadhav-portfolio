@@ -1,6 +1,7 @@
+
 import React from 'react';
-import { Mail, Phone, MapPin, ChevronRight } from 'lucide-react';
-import CustomButton from '../ui/CustomButton';
+import { Mail, Phone, MapPin } from 'lucide-react';
+import ContactForm from './ContactForm';
 
 const Contact = () => {
   return (
@@ -51,48 +52,7 @@ const Contact = () => {
           </div>
 
           <div>
-            <form className="space-y-6 reveal">
-              <div>
-                <label htmlFor="name" className="block text-white/80 text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  className="w-full bg-dark-300 border border-dark-200 text-white text-sm rounded-lg focus:ring-neon-purple focus:border-neon-purple block p-2.5"
-                  placeholder="Your Name"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="email" className="block text-white/80 text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  className="w-full bg-dark-300 border border-dark-200 text-white text-sm rounded-lg focus:ring-neon-purple focus:border-neon-purple block p-2.5"
-                  placeholder="Your Email"
-                  required
-                />
-              </div>
-              <div>
-                <label htmlFor="message" className="block text-white/80 text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  className="w-full bg-dark-300 border border-dark-200 text-white text-sm rounded-lg focus:ring-neon-purple focus:border-neon-purple block p-2.5"
-                  placeholder="Your Message"
-                  required
-                />
-              </div>
-              <CustomButton size="lg" className="w-full group">
-                Send Message
-                <ChevronRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-              </CustomButton>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </div>

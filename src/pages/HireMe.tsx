@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Calendar, Mail, Phone, Send } from 'lucide-react';
@@ -6,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CustomButton from '@/components/ui/CustomButton';
 import { toast } from '@/components/ui/use-toast';
+import { supabase } from '@/lib/supabase';
 
 const HireMe = () => {
   const [formData, setFormData] = useState({
@@ -28,24 +28,53 @@ const HireMe = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    toast({
-      title: "Project request submitted!",
-      description: "Thank you for your interest in working with me. I'll contact you soon to discuss your project.",
-    });
-    
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      projectType: '',
-      budget: '',
-      timeline: '',
-      details: ''
-    });
-    setIsSubmitting(false);
+    try {
+      // Insert the form data into Supabase
+      const { data, error } = await supabase
+        .from('project_requests')
+        .insert([
+          { 
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            project_type: formData.projectType,
+            budget: formData.budget,
+            timeline: formData.timeline,
+            details: formData.details,
+            created_at: new Date().toISOString()
+          }
+        ]);
+      
+      if (error) {
+        console.error('Error submitting form:', error);
+        throw error;
+      }
+      
+      toast({
+        title: "Project request submitted!",
+        description: "Thank you for your interest in working with me. I'll contact you soon to discuss your project.",
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        projectType: '',
+        budget: '',
+        timeline: '',
+        details: ''
+      });
+    } catch (error) {
+      toast({
+        title: "Submission failed",
+        description: "There was an error submitting your request. Please try again.",
+        variant: "destructive",
+      });
+      console.error(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   useEffect(() => {
