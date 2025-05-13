@@ -49,34 +49,36 @@ const Services = () => {
 
   return (
     <section id="services" className="py-20 bg-dark-500">
-      <div className="text-center mb-16 reveal">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
-          What I Do
-        </span>
-        <h2 className="section-title mx-auto">My Quality Services</h2>
-      </div>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {services.map((service, index) => (
-          <div 
-            key={index} 
-            className="glass-card p-8 transition-all duration-300 hover:translate-y-[-5px] hover-glow reveal"
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <div className="mb-6 w-14 h-14 rounded-lg flex items-center justify-center bg-gradient-purple-blue">
-              <service.icon size={24} />
+      <div className="container">
+        <div className="text-center mb-16 reveal">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
+            What I Do
+          </span>
+          <h2 className="section-title mx-auto">My Quality Services</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {services.map((service, index) => (
+            <div 
+              key={index} 
+              className="glass-card p-8 transition-all duration-300 hover:translate-y-[-5px] hover-glow reveal"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <div className="mb-6 w-14 h-14 rounded-lg flex items-center justify-center bg-gradient-purple-blue">
+                <service.icon size={24} />
+              </div>
+              
+              <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
+              <p className="text-white/70 mb-6">{service.description}</p>
+              
+              <Link to="/hire-me">
+                <CustomButton variant="outline" size="sm">
+                  Learn More
+                </CustomButton>
+              </Link>
             </div>
-            
-            <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-            <p className="text-white/70 mb-6">{service.description}</p>
-            
-            <Link to="/hire-me">
-              <CustomButton variant="outline" size="sm">
-                Learn More
-              </CustomButton>
-            </Link>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

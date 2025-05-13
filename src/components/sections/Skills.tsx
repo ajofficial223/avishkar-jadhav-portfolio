@@ -51,42 +51,44 @@ const Skills = () => {
 
   return (
     <section id="skills" className="py-20 bg-dark-400">
-      <div className="text-center mb-16 reveal">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
-          Expertise
-        </span>
-        <h2 className="section-title mx-auto">My Skills</h2>
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {skills.map((skill, index) => (
-          <div 
-            key={index} 
-            className="glass-card p-6 hover-glow reveal"
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <div className="flex items-center mb-4">
-              <div className="w-12 h-12 rounded-full flex items-center justify-center bg-dark-300 p-2 mr-4">
-                <img 
-                  src={skill.icon} 
-                  alt={skill.name} 
-                  className="w-8 h-8 object-contain"
-                />
+      <div className="container">
+        <div className="text-center mb-16 reveal">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
+            Expertise
+          </span>
+          <h2 className="section-title mx-auto">My Skills</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {skills.map((skill, index) => (
+            <div 
+              key={index} 
+              className="glass-card p-6 hover-glow reveal"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center bg-dark-300 p-2 mr-4">
+                  <img 
+                    src={skill.icon} 
+                    alt={skill.name} 
+                    className="w-8 h-8 object-contain"
+                  />
+                </div>
+                <h3 className="text-xl font-medium">{skill.name}</h3>
               </div>
-              <h3 className="text-xl font-medium">{skill.name}</h3>
+              
+              <div className="w-full bg-dark-300 h-2 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-purple-blue rounded-full transition-all duration-1000"
+                  style={{ width: `${skill.level}%`, transitionDelay: `${index * 100 + 300}ms` }}
+                ></div>
+              </div>
+              <div className="flex justify-end mt-2">
+                <span className="text-white/60 text-sm">{skill.level}%</span>
+              </div>
             </div>
-            
-            <div className="w-full bg-dark-300 h-2 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-purple-blue rounded-full transition-all duration-1000"
-                style={{ width: `${skill.level}%`, transitionDelay: `${index * 100 + 300}ms` }}
-              ></div>
-            </div>
-            <div className="flex justify-end mt-2">
-              <span className="text-white/60 text-sm">{skill.level}%</span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

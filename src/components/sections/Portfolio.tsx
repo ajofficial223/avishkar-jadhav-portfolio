@@ -62,65 +62,67 @@ const Portfolio = () => {
 
   return (
     <section id="portfolio" className="py-20 bg-dark-400">
-      <div className="text-center mb-16 reveal">
-        <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
-          My Work
-        </span>
-        <h2 className="section-title mx-auto">Recent Works</h2>
-      </div>
-      
-      <div className="flex flex-wrap justify-center gap-4 mb-12 reveal">
-        {categories.map((category, index) => (
-          <button
-            key={index}
-            className={`px-6 py-2 rounded-full transition-all duration-300 ${
-              activeCategory === category 
-              ? 'bg-gradient-purple-blue text-white' 
-              : 'bg-dark-300 text-white/70 hover:text-white hover:bg-dark-200'
-            }`}
-            onClick={() => setActiveCategory(category)}
-          >
-            {category}
-          </button>
-        ))}
-      </div>
-      
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
-        {filteredProjects.map((project, index) => (
-          <div 
-            key={index} 
-            className="group relative overflow-hidden rounded-xl reveal"
-            style={{ transitionDelay: `${index * 100}ms` }}
-          >
-            <div className="aspect-[4/3] overflow-hidden">
-              <img 
-                src={project.image} 
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
-            
-            <div className="absolute inset-0 bg-gradient-to-t from-dark-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-              <div className="p-6">
-                <span className="text-neon-purple text-sm font-medium block mb-2">{project.category}</span>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">{project.title}</h3>
-                <CustomButton variant="outline" size="sm">
-                  View Details
-                </CustomButton>
+      <div className="container">
+        <div className="text-center mb-16 reveal">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-dark-300 border border-neon-purple/20 text-white/80 text-sm mb-4">
+            My Work
+          </span>
+          <h2 className="section-title mx-auto">Recent Works</h2>
+        </div>
+        
+        <div className="flex flex-wrap justify-center gap-4 mb-12 reveal">
+          {categories.map((category, index) => (
+            <button
+              key={index}
+              className={`px-6 py-2 rounded-full transition-all duration-300 ${
+                activeCategory === category 
+                ? 'bg-gradient-purple-blue text-white' 
+                : 'bg-dark-300 text-white/70 hover:text-white hover:bg-dark-200'
+              }`}
+              onClick={() => setActiveCategory(category)}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+          {filteredProjects.map((project, index) => (
+            <div 
+              key={index} 
+              className="group relative overflow-hidden rounded-xl reveal"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+              </div>
+              
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                <div className="p-6">
+                  <span className="text-neon-purple text-sm font-medium block mb-2">{project.category}</span>
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">{project.title}</h3>
+                  <CustomButton variant="outline" size="sm">
+                    View Details
+                  </CustomButton>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-      
-      <div className="mt-16 text-center reveal">
-        <Link to="/services" className="inline-flex items-center">
-          <CustomButton size="lg" className="group">
-            Explore Services
-            <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </CustomButton>
-        </Link>
-        <p className="text-white/50 mt-4 text-sm">Discover all the design services I offer</p>
+          ))}
+        </div>
+        
+        <div className="mt-16 text-center reveal">
+          <Link to="/services" className="inline-flex items-center">
+            <CustomButton size="lg" className="group">
+              Explore Services
+              <ArrowRight className="ml-2 w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+            </CustomButton>
+          </Link>
+          <p className="text-white/50 mt-4 text-sm">Discover all the design services I offer</p>
+        </div>
       </div>
     </section>
   );

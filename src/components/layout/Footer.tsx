@@ -1,25 +1,29 @@
-
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Instagram, Linkedin, ExternalLink } from 'lucide-react';
 
 const Footer = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const handleSmoothScroll = (e, targetId) => {
-    // Only handle smooth scroll if we're on the homepage
+  const handleSmoothScroll = useCallback((e: React.MouseEvent, targetId: string) => {
+    e.preventDefault();
+    
+    // If we're on the same page, do direct scrolling
     if (location.pathname === '/') {
-      e.preventDefault();
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.scrollIntoView({ behavior: 'smooth' });
+      const targetElement = document.getElementById(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({ behavior: 'smooth' });
       }
+    } else {
+      // Navigate to home page with hash
+      navigate(`/#${targetId}`);
     }
-  };
+  }, [location.pathname, navigate]);
 
   return (
-    <footer className="bg-dark-400 border-t border-white/5 py-12">
-      <div className="container mx-auto px-6">
+    <footer className="bg-dark-400 text-white pt-20 pb-8">
+      <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
             <Link to="/" className="text-2xl font-bold text-gradient mb-4 inline-block">

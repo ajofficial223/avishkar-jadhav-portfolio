@@ -1,5 +1,4 @@
-
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import Hero from '@/components/sections/Hero';
@@ -11,45 +10,48 @@ import Experience from '@/components/sections/Experience';
 import Contact from '@/components/sections/Contact';
 
 const Index = () => {
-  useEffect(() => {
-    // Initialize intersection observer for reveal animations
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    }, { threshold: 0.1 });
+  // Store observer reference to prevent recreation
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
-    document.querySelectorAll('.reveal').forEach(el => {
-      observer.observe(el);
+  useEffect(() => {
+    // Only create the observer once
+    if (!observerRef.current) {
+      // Initialize intersection observer for reveal animations
+      observerRef.current = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+    }
+
+    // Observe all reveal elements
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach(el => {
+      if (observerRef.current) {
+        observerRef.current.observe(el);
+      }
     });
 
-    // Smooth scroll to section when navigating via hash links
-    const handleHashLinkClick = () => {
+    // Handle initial hash navigation
+    setTimeout(() => {
       const { hash } = window.location;
       if (hash) {
         const section = document.querySelector(hash);
         if (section) {
-          setTimeout(() => {
-            section.scrollIntoView({ behavior: 'smooth' });
-          }, 100);
+          section.scrollIntoView({ behavior: 'smooth' });
         }
       }
-    };
-
-    // Check for hash on initial load
-    handleHashLinkClick();
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashLinkClick);
+    }, 100);
 
     return () => {
-      // Cleanup
-      document.querySelectorAll('.reveal').forEach(el => {
-        observer.unobserve(el);
-      });
-      window.removeEventListener('hashchange', handleHashLinkClick);
+      // Cleanup observer on unmount
+      if (observerRef.current) {
+        elements.forEach(el => {
+          observerRef.current?.unobserve(el);
+        });
+      }
     };
   }, []);
 

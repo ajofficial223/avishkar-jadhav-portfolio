@@ -1,10 +1,9 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, AlertTriangle } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
 import { toast } from '@/components/ui/use-toast';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
-import { supabase } from '@/lib/supabase';
+import { supabase, isSupabaseConnected } from '@/lib/supabase';
 
 const HireMeForm = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +16,12 @@ const HireMeForm = () => {
     details: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isOfflineMode, setIsOfflineMode] = useState(!supabase);
+  const [isOfflineMode, setIsOfflineMode] = useState(true);
+  
+  // Check Supabase connection status on mount
+  useEffect(() => {
+    setIsOfflineMode(!isSupabaseConnected());
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -29,7 +33,7 @@ const HireMeForm = () => {
     setIsSubmitting(true);
     
     try {
-      if (!supabase) {
+      if (isOfflineMode) {
         // Save to localStorage if Supabase is not connected
         const requestData = {
           name: formData.name,
@@ -53,18 +57,10 @@ const HireMeForm = () => {
         });
         
         // Reset form after successful submission
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          projectType: '',
-          budget: '',
-          timeline: '',
-          details: ''
-        });
+        resetForm();
       } else {
         // If Supabase is available, use it
-        const { data, error } = await supabase
+        const { error } = await supabase!
           .from('project_requests')
           .insert([
             { 
@@ -90,15 +86,7 @@ const HireMeForm = () => {
         });
         
         // Reset form after successful submission
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          projectType: '',
-          budget: '',
-          timeline: '',
-          details: ''
-        });
+        resetForm();
       }
     } catch (error) {
       toast({
@@ -111,6 +99,18 @@ const HireMeForm = () => {
       setIsSubmitting(false);
     }
   };
+  
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      projectType: '',
+      budget: '',
+      timeline: '',
+      details: ''
+    });
+  };
 
   return (
     <>
@@ -119,7 +119,7 @@ const HireMeForm = () => {
           <AlertTriangle className="h-4 w-4 text-yellow-600" />
           <AlertTitle className="text-yellow-600">Offline Mode</AlertTitle>
           <AlertDescription className="text-white/70">
-            Supabase is not connected. Your form submissions will be saved locally until a connection is established.
+            Database is not connected. Your form submissions will be saved locally until a connection is established.
           </AlertDescription>
         </Alert>
       )}
@@ -249,10 +249,10 @@ const HireMeForm = () => {
             size="lg"
             className="min-w-[200px] flex items-center justify-center gap-2"
             disabled={isSubmitting}
-            isGlowing
+            isGlowing={!isSubmitting}
           >
-            {isSubmitting ? 'Submitting...' : 'Submit Request'}
-            <Send size={16} />
+            {isSubmitting ? 'Submitting...' : 'Submit Request'} 
+            {!isSubmitting && <Send className="w-4 h-4" />}
           </CustomButton>
         </div>
       </form>

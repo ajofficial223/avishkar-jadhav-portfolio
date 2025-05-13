@@ -1,4 +1,3 @@
-
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "@/components/layout/Navbar";
@@ -21,7 +20,7 @@ const NotFound = () => {
       <Navbar />
       
       <main className="flex-grow flex items-center justify-center py-24">
-        <div className="container mx-auto px-6 text-center">
+        <div className="container text-center">
           <div className="glass-card max-w-2xl mx-auto p-12 animate-fade-in">
             <h1 className="text-gradient text-9xl font-bold mb-4">404</h1>
             <h2 className="text-3xl font-bold mb-6">Page Not Found</h2>

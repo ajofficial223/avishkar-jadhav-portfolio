@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -44,8 +43,8 @@ const Services = () => {
     <div className="min-h-screen bg-dark-500 text-white">
       <Navbar />
       
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-6">
+      <main className="pt-32 pb-20">
+        <div className="container">
           <div className="mb-12">
             <Link to="/#portfolio" className="inline-flex items-center text-white/70 hover:text-white transition-colors mb-6">
               <ChevronLeft className="w-4 h-4 mr-2" />

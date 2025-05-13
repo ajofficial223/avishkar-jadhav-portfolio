@@ -32,7 +32,7 @@ const Hero = () => {
       <div className="absolute top-0 left-0 w-full h-full bg-gradient-radial from-neon-purple/5 via-transparent to-transparent opacity-70"></div>
       <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-radial from-neon-blue/5 via-transparent to-transparent opacity-70"></div>
       
-      <div className="container mx-auto px-6">
+      <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1">
             <div className="space-y-6">

@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -32,8 +31,8 @@ const HireMe = () => {
     <div className="min-h-screen bg-dark-500 text-white">
       <Navbar />
       
-      <main className="pt-24 pb-16">
-        <div className="container mx-auto px-6">
+      <main className="pt-32 pb-20">
+        <div className="container">
           <PageHeader />
           
           <div className="max-w-4xl mx-auto glass-card p-8 sm:p-12 reveal">

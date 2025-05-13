@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,6 +8,7 @@ import HireMe from "./pages/HireMe";
 import Services from "./pages/Services";
 import SplashCursor from "./components/ui/SplashCursor";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/utils/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -18,6 +18,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <SplashCursor />
         <Routes>
           <Route path="/" element={<Index />} />
