@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 import { toast } from '@/components/ui/use-toast';
-import { getSupabase } from '@/lib/supabase';
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -21,6 +20,7 @@ const ContactForm = () => {
   // Function to send data to webhook
   const sendToWebhook = async (data: any) => {
     try {
+      console.log('Sending data to webhook:', data);
       const response = await fetch('https://testingperpose05.app.n8n.cloud/webhook/Form Submission', {
         method: 'POST',
         headers: {
@@ -35,11 +35,14 @@ const ContactForm = () => {
       
       if (!response.ok) {
         console.error('Webhook submission failed:', response.statusText);
+        return false;
       } else {
         console.log('Webhook submission successful');
+        return true;
       }
     } catch (error) {
       console.error('Error submitting to webhook:', error);
+      return false;
     }
   };
 
@@ -48,9 +51,6 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Get the Supabase client
-      const supabase = getSupabase();
-      
       // Prepare the contact message data
       const contactMessage = { 
         name: formData.name,
@@ -59,41 +59,24 @@ const ContactForm = () => {
         created_at: new Date().toISOString()
       };
       
-      // Send data to webhook regardless of Supabase connection
-      await sendToWebhook(contactMessage);
+      // Send data to webhook
+      const webhookSuccess = await sendToWebhook(contactMessage);
       
-      if (!supabase) {
-        // If Supabase is not initialized, save to localStorage
-        const existingMessages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
-        localStorage.setItem('contact_messages', JSON.stringify([...existingMessages, contactMessage]));
-        
-        toast({
-          title: "Message saved locally",
-          description: "Your message has been saved locally. Connect to Supabase to enable online submissions.",
-        });
-      } else {
-        // Insert the contact form data into Supabase
-        const { data, error } = await supabase
-          .from('contact_messages')
-          .insert([contactMessage]);
-        
-        if (error) {
-          console.error('Error submitting contact form:', error);
-          throw error;
-        }
-        
+      if (webhookSuccess) {
         toast({
           title: "Message sent!",
           description: "Thank you for reaching out. I'll get back to you soon.",
         });
+        
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to submit form to webhook');
       }
-      
-      // Reset form after successful submission
-      setFormData({
-        name: '',
-        email: '',
-        message: ''
-      });
     } catch (error) {
       toast({
         title: "Message could not be sent",
