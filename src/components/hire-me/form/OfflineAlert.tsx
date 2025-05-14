@@ -8,17 +8,8 @@ interface OfflineAlertProps {
 }
 
 const OfflineAlert = ({ isOfflineMode }: OfflineAlertProps) => {
-  if (!isOfflineMode) return null;
-  
-  return (
-    <Alert className="mb-6 bg-dark-300 border-yellow-600">
-      <AlertTriangle className="h-4 w-4 text-yellow-600" />
-      <AlertTitle className="text-yellow-600">Offline Mode</AlertTitle>
-      <AlertDescription className="text-white/70">
-        Database is not connected. Your form submissions will be saved locally and sent to the webhook.
-      </AlertDescription>
-    </Alert>
-  );
+  // Always return null to hide the component
+  return null;
 };
 
 export default OfflineAlert;

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Send } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -18,7 +17,7 @@ const HireMeForm = () => {
     details: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isOfflineMode, setIsOfflineMode] = useState(true);
+  const [isOfflineMode, setIsOfflineMode] = useState(false); // Changed to false to hide the alert
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
