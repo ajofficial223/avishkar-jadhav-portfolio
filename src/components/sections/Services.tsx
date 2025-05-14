@@ -1,5 +1,6 @@
+
 import React, { useEffect } from 'react';
-import { Paintbrush, PenTool, MonitorSmartphone, Brain } from 'lucide-react';
+import { Paintbrush, PenTool, MonitorSmartphone, Brain, Bot, Globe } from 'lucide-react';
 import CustomButton from '../ui/CustomButton';
 import { Link } from 'react-router-dom';
 
@@ -23,6 +24,16 @@ const services = [
     title: "AI-Powered Visuals",
     description: "Leverage cutting-edge AI technology to create innovative and unique visual experiences that set your brand apart.",
     icon: Brain,
+  },
+  {
+    title: "Agentic AI Development",
+    description: "Build intelligent AI agents and chatbots that can automate tasks, provide customer support, and enhance user experiences.",
+    icon: Bot,
+  },
+  {
+    title: "Website Development",
+    description: "Create responsive, modern websites with engaging UI/UX design using the latest web technologies and frameworks.",
+    icon: Globe,
   }
 ];
 
@@ -57,7 +68,7 @@ const Services = () => {
           <h2 className="section-title mx-auto">My Quality Services</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => (
             <div 
               key={index} 

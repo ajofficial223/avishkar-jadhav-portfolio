@@ -1,4 +1,6 @@
+
 import React, { useEffect } from 'react';
+import { Bot, Webflow } from 'lucide-react';
 
 const skills = [
   { 
@@ -25,6 +27,18 @@ const skills = [
     name: "AI-Powered Visuals", 
     icon: "https://cdn-icons-png.flaticon.com/512/8649/8649595.png",
     level: 85
+  },
+  { 
+    name: "AI Agent Development", 
+    isLucideIcon: true,
+    iconComponent: Bot,
+    level: 82
+  },
+  { 
+    name: "Webflow", 
+    isLucideIcon: true,
+    iconComponent: Webflow,
+    level: 88
   }
 ];
 
@@ -68,11 +82,15 @@ const Skills = () => {
             >
               <div className="flex items-center mb-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center bg-dark-300 p-2 mr-4">
-                  <img 
-                    src={skill.icon} 
-                    alt={skill.name} 
-                    className="w-8 h-8 object-contain"
-                  />
+                  {skill.isLucideIcon ? (
+                    <skill.iconComponent className="w-8 h-8" />
+                  ) : (
+                    <img 
+                      src={skill.icon} 
+                      alt={skill.name} 
+                      className="w-8 h-8 object-contain"
+                    />
+                  )}
                 </div>
                 <h3 className="text-xl font-medium">{skill.name}</h3>
               </div>

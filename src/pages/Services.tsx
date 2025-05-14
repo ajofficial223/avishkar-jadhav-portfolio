@@ -1,3 +1,4 @@
+
 import React from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -35,6 +36,16 @@ const serviceItems = [
     title: "AI Dish Generation",
     description: "Innovative AI-generated visuals for unique and creative food presentation concepts.",
     image: "https://images.unsplash.com/photo-1635405074683-96d6921a2a68?auto=format&fit=crop&w=800&h=600"
+  },
+  {
+    title: "Agentic AI Development",
+    description: "Custom AI agents and chatbots that automate tasks and provide intelligent interactions.",
+    image: "https://images.unsplash.com/photo-1673476942261-7ac7c768d6b5?auto=format&fit=crop&w=800&h=600"
+  },
+  {
+    title: "Website Development",
+    description: "Modern, responsive websites with stunning UI/UX design and optimized performance.",
+    image: "https://images.unsplash.com/photo-1561736778-92e52a7769ef?auto=format&fit=crop&w=800&h=600"
   }
 ];
 
