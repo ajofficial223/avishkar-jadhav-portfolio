@@ -1,6 +1,6 @@
 
 import React, { useEffect } from 'react';
-import { Bot, Webflow } from 'lucide-react';
+import { Bot, Globe } from 'lucide-react';
 
 const skills = [
   { 
@@ -37,7 +37,7 @@ const skills = [
   { 
     name: "Webflow", 
     isLucideIcon: true,
-    iconComponent: Webflow,
+    iconComponent: Globe,
     level: 88
   }
 ];
