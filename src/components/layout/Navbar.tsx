@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -115,7 +116,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white hover:text-neon-purple"
+          className="md:hidden text-white hover:text-neon-purple z-50"
           onClick={toggleMobileMenu}
           aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMobileMenuOpen}
@@ -124,26 +125,26 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu - With Improved Animation */}
+      {/* Mobile Menu - Fixed position with proper z-index */}
       <div 
-        className={`md:hidden fixed inset-x-0 top-[calc(100%)] h-[calc(100vh-var(--header-height))] bg-dark-400/95 backdrop-blur-md shadow-lg transition-all duration-300 ease-in-out ${
-          isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+        className={`fixed inset-0 bg-dark-400/95 backdrop-blur-md z-40 md:hidden transition-opacity duration-300 ${
+          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
       >
-        <div className="flex flex-col py-6 px-6 space-y-6">
+        <div className="flex flex-col justify-center h-full px-6 py-20 space-y-8">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.path}
               onClick={(e) => handleSmoothScroll(e, link.targetId)}
-              className="text-white/80 hover:text-white py-2 transition-colors text-lg"
+              className="text-white text-xl py-2 text-center hover:text-neon-purple transition-colors"
             >
               {link.name}
             </a>
           ))}
           <Link
             to="/hire-me"
-            className="bg-gradient-purple-blue text-white px-5 py-3 rounded-full text-center hover:shadow-[0_0_15px_rgba(168,85,247,0.6)] transition-all duration-300 mt-4"
+            className="bg-gradient-purple-blue text-white px-5 py-3 rounded-full text-center hover:shadow-[0_0_15px_rgba(168,85,247,0.6)] transition-all duration-300 mt-8"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Hire Me

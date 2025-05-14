@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -119,5 +120,15 @@
 @media (max-width: 767px) {
   header {
     height: var(--header-height);
+  }
+  
+  /* Add content padding for fixed header */
+  main {
+    padding-top: var(--header-height);
+  }
+  
+  /* Ensure mobile menu has appropriate height and scrolling */
+  .mobile-menu-open {
+    overflow: hidden;
   }
 }
