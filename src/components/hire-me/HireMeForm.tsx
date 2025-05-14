@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Send, AlertTriangle } from 'lucide-react';
 import CustomButton from '@/components/ui/CustomButton';
@@ -28,24 +29,53 @@ const HireMeForm = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  // Function to send data to webhook
+  const sendToWebhook = async (data: any) => {
+    try {
+      const response = await fetch('https://testingperpose05.app.n8n.cloud/webhook/Form Submission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          formType: 'hire-me',
+          timestamp: new Date().toISOString()
+        }),
+      });
+      
+      if (!response.ok) {
+        console.error('Webhook submission failed:', response.statusText);
+      } else {
+        console.log('Webhook submission successful');
+      }
+    } catch (error) {
+      console.error('Error submitting to webhook:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
+      // Prepare the request data
+      const requestData = {
+        name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        project_type: formData.projectType,
+        budget: formData.budget,
+        timeline: formData.timeline,
+        details: formData.details,
+        created_at: new Date().toISOString()
+      };
+      
+      // Send data to webhook regardless of Supabase connection
+      await sendToWebhook(requestData);
+      
       if (isOfflineMode) {
         // Save to localStorage if Supabase is not connected
-        const requestData = {
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          project_type: formData.projectType,
-          budget: formData.budget,
-          timeline: formData.timeline,
-          details: formData.details,
-          created_at: new Date().toISOString()
-        };
-        
         // Get existing requests or initialize empty array
         const existingRequests = JSON.parse(localStorage.getItem('project_requests') || '[]');
         existingRequests.push(requestData);
@@ -62,18 +92,7 @@ const HireMeForm = () => {
         // If Supabase is available, use it
         const { error } = await supabase!
           .from('project_requests')
-          .insert([
-            { 
-              name: formData.name,
-              email: formData.email,
-              phone: formData.phone,
-              project_type: formData.projectType,
-              budget: formData.budget,
-              timeline: formData.timeline,
-              details: formData.details,
-              created_at: new Date().toISOString()
-            }
-          ]);
+          .insert([requestData]);
         
         if (error) {
           console.error('Error submitting form:', error);

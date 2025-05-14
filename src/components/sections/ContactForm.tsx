@@ -18,6 +18,31 @@ const ContactForm = () => {
     setFormData(prev => ({ ...prev, [id]: value }));
   };
 
+  // Function to send data to webhook
+  const sendToWebhook = async (data: any) => {
+    try {
+      const response = await fetch('https://testingperpose05.app.n8n.cloud/webhook/Form Submission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...data,
+          formType: 'contact',
+          timestamp: new Date().toISOString()
+        }),
+      });
+      
+      if (!response.ok) {
+        console.error('Webhook submission failed:', response.statusText);
+      } else {
+        console.log('Webhook submission successful');
+      }
+    } catch (error) {
+      console.error('Error submitting to webhook:', error);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -26,15 +51,19 @@ const ContactForm = () => {
       // Get the Supabase client
       const supabase = getSupabase();
       
+      // Prepare the contact message data
+      const contactMessage = { 
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        created_at: new Date().toISOString()
+      };
+      
+      // Send data to webhook regardless of Supabase connection
+      await sendToWebhook(contactMessage);
+      
       if (!supabase) {
         // If Supabase is not initialized, save to localStorage
-        const contactMessage = { 
-          name: formData.name,
-          email: formData.email,
-          message: formData.message,
-          created_at: new Date().toISOString()
-        };
-        
         const existingMessages = JSON.parse(localStorage.getItem('contact_messages') || '[]');
         localStorage.setItem('contact_messages', JSON.stringify([...existingMessages, contactMessage]));
         
@@ -46,14 +75,7 @@ const ContactForm = () => {
         // Insert the contact form data into Supabase
         const { data, error } = await supabase
           .from('contact_messages')
-          .insert([
-            { 
-              name: formData.name,
-              email: formData.email,
-              message: formData.message,
-              created_at: new Date().toISOString()
-            }
-          ]);
+          .insert([contactMessage]);
         
         if (error) {
           console.error('Error submitting contact form:', error);
